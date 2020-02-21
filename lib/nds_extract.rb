@@ -1,14 +1,24 @@
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'directors_database'
 
+def gross_for_director(director_data)
+  movie_index = 0
+  movies = director_data[:movies]
+  total_gross_for_director = 0
+
+  while movie_index < movies.length do
+    total_gross_for_director += movies[movie_index][:worldwide_gross]
+    movie_index += 1
+  end
+  total_gross_for_director
+end
+
 def directors_totals(nds)
   result = {}
-  nil
-
-director_index = 0
-  while director_index < nds.length
-    current_director = nds[director_index][:name]
-    result[current_director] = gross_for_director(nds[director_index])
+  director_index = 0
+  while director_index < nds.length do
+    name = nds[director_index][:name]
+    result[name] = gross_for_director(nds[director_index])
     director_index += 1
   end
   result
@@ -17,14 +27,13 @@ end
 def gross_for_director(director_data)
   movie_index = 0
   movies = director_data[:movies]
-  sub_total = 0
+  grand_total = 0
   while movie_index < movies.length do
-    sub_total += movies[movie_index][:worldwide_gross]
+    grand_total += movies[movie_index][:worldwide_gross]
     movie_index += 1
   end
-  sub_total
+  grand_total
 end
-
 directors_totals(directors_database)
 
 # # Find a way to accumulate the :worldwide_grosses and return that Integer
